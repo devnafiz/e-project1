@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TodoList;
 
 class ListController extends Controller
 {
@@ -13,7 +14,9 @@ class ListController extends Controller
      */
     public function index()
     {
-        //
+         $data['todo_list']=TodoList::where('status','1')->paginate(10);
+       
+
     }
 
     /**
