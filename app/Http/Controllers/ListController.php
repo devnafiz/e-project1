@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TodoList;
+use Auth;
 
 class ListController extends Controller
 {
@@ -14,7 +15,9 @@ class ListController extends Controller
      */
     public function index()
     {
+         $data['title']= 'All List';
          $data['todo_list']=TodoList::where('status','1')->paginate(10);
+         return view('frontend.todo.index',$data);
        
 
     }
@@ -26,7 +29,8 @@ class ListController extends Controller
      */
     public function create()
     {
-        //
+       $data['title'] ='Create Todo';
+       return view('frontend.todo.create',$data);
     }
 
     /**
@@ -37,7 +41,23 @@ class ListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //dd($request->all());
+        $request->validate([
+           'name'=>'required',
+           'description'=>'required|max:200'
+
+        ]);
+        //dd(Auth::user());
+
+        $list = new TodoList();
+        $list->name = $request->name;
+        $list->description =$request->description;
+        $list->user_id= Auth::user()->id;
+        $list->status = 1;
+        $list->save();
+        return redirect()->route('list.index')->with('success','succesfully add task');
+
     }
 
     /**
@@ -59,7 +79,10 @@ class ListController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+       $data['title'] ='edit Todo';
+       $data['edit_data']=TodoList::where('status',1)->first();
+       return view('frontend.todo.edit',$data);
     }
 
     /**
@@ -71,7 +94,29 @@ class ListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+           'name'=>'required',
+           'description'=>'required|max:200'
+
+        ]);
+            $todo =TodoList::where('id',$id)->first();
+        if($todo->user_id!=Auth::user()->id){
+            return redirect()->back()->with('error','Something is wrong');
+        }else{
+
+
+        $list = TodoList::find($id);
+        $list->name = $request->name;
+        $list->description =$request->description;
+        $list->user_id= Auth::user()->id;
+        $list->status = 1;
+        $list->save();
+        return redirect()->route('list.index')->with('success','succesfully add task');
+
+
+        }
+
+        
     }
 
     /**

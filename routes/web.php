@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListController;
+
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +17,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/',[HomeController::class,'index'])->name('home');
+
+Route::get('/login',[AuthController::class,'loginView'])->name('user.login.view');
+Route::post('/login',[AuthController::class,'login'])->name('user.login');
+Route::get('/logout', [AuthController::class,'logout'])->name('logout');
+
+
+
+Route::group(['middleware' => ['auth','web']], function() {
+
+  Route::get('/profile',[AuthController::class,'profile'])->name('user.profile');	
+ 
+  Route::resource('list',ListController::class,[
+        'only' => ['index', 'create', 'store','edit', 'update', 'destroy'],
+]); 
 });
+
+
+
