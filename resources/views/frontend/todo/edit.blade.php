@@ -20,7 +20,7 @@
 	   		
 	   	</div>
 	   	<div class="col-lg-8">
-	   		<a href="#" class="pull-right btn btn-primary pt-2 mx-3">list Task</a>
+	   		<a href="{{route('list.index')}}" class="pull-right btn btn-primary pt-2 mx-3">list Task</a>
 	   		<form  action="{{route('list.update',$edit_data->id)}}" method="POST">
 	   			@csrf
 	   			@method('PUT')

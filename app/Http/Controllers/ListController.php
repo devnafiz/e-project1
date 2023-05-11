@@ -72,7 +72,9 @@ class ListController extends Controller
      */
     public function show($id)
     {
-        //
+      $data['title'] =' Todo details';
+       $data['list']=TodoList::where('id',$id)->first();
+       return view('frontend.todo.show',$data);
     }
 
     /**
@@ -85,7 +87,7 @@ class ListController extends Controller
     {
         
        $data['title'] ='edit Todo';
-       $data['edit_data']=TodoList::where('status',1)->first();
+       $data['edit_data']=TodoList::where('id',$id)->first();
        return view('frontend.todo.edit',$data);
     }
 
