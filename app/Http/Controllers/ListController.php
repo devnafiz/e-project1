@@ -8,6 +8,10 @@ use Auth;
 
 class ListController extends Controller
 {
+    
+    public function __construct(){
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +20,7 @@ class ListController extends Controller
     public function index()
     {
          $data['title']= 'All List';
-         $data['todo_list']=TodoList::where('status','1')->paginate(10);
+         $data['todo_list']=TodoList::where('status','1')->orderBy('id','desc')->paginate(5);
          return view('frontend.todo.index',$data);
        
 
@@ -127,6 +131,18 @@ class ListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+
+    }
+    public function delete($id){
+        $list=TodoList::where('id',$id)->first();
+        if( $list->user_id== Auth::user()->id){
+             $list->delete();
+
+          return redirect()->route('list.index')->with('success','succesfully  deleted Task');
+        }else{
+             return redirect()->back()->with('error','Something  wrong');
+        }
+
     }
 }

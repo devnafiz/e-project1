@@ -34,8 +34,9 @@ Route::group(['middleware' => ['auth','web']], function() {
   Route::get('/profile',[AuthController::class,'profile'])->name('user.profile');	
  
   Route::resource('list',ListController::class,[
-        'only' => ['index', 'create', 'store','edit', 'update', 'destroy'],
+        'only' => ['index', 'create', 'store','edit', 'update'],
 ]); 
+  Route::get('list/delete/{id}',[ListController::class,'delete'])->name('list.delete');
 });
 
 

@@ -40,12 +40,22 @@
 	   					<td>{{($list->status==1)? 'Active': 'Inactive'}}</td>
 	   					<td>
 	   						<a href="{{route('list.edit',$list->id)}}" class="btn btn-info" >Edit</a>
-	   						<a href="{{route('list.destroy',$list->id)}}" class="btn btn-danger" >Delete</a>
+	   						<a href="{{route('list.delete',$list->id)}}" class="btn btn-danger" >Delete</a>
 	   					</td>
 	   				</tr>
 	   				@endforeach
+
 	   			</tbody>
+
+	   		 	
+	   		
+
 	   		</table>
+	   		<div class="pagination">
+	   			 {{$todo_list->links()}}
+	   			
+	   		</div>
+	   		 
 	   		
 	   	</div>
    </div>
