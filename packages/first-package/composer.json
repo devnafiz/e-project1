@@ -1,0 +1,19 @@
+{
+    "name": "hasan/first-package",
+    "description": "This is my first package",
+    "autoload": {
+        "psr-4": {
+            "Hasan\\FirstPackage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "nafiz",
+            "email": "nafiz.2011@yahoo.com"
+        }
+    ],
+    "require": {},
+    "autoload":{
+        "files":["src/helpers.php"]
+    }
+}
